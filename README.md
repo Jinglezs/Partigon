@@ -1,3 +1,17 @@
+This is a fork of the original Partigon library by Gameoholic, which can be found [here](https://github.com/Gameoholic/Partigon).
+
+This fork reworks some of the implementation details of the original to embrace a more Kotlin-like design:
+* Replaces uses of BukkitScheduler with Kotlin coroutines
+* Animations are now tied to a CoroutineScope, allowing for easier lifecycle management.
+* PartigonParticle and implementations renamed to PartigonAnimation to better reflect their purpose.
+* Kotlin Duration can alternatively be used in place of server ticks for delays and durations for readability purposes.
+
+This fork can be used as a standalone library rather than a plugin. For personal use, clone the repository and publish
+it to your local Maven repository. Ensure maven local is listed as a repository in your gradle build file and add the
+dependency as normal.
+
+The original documentation is still valid, excluding the class name changes.
+
 # Partigon
 
 A Minecraft particle animation library designed to make your life easier.
@@ -10,41 +24,10 @@ To get started, head to the [documentation](https://partigon.gameoholic.xyz/).
 
 
 ## Using Partigon
-_It is recommended to use Kotlin with Partigon, as it was made specifically for usage with Kotlin._
+This fork of Partigon makes use of the following libraries:
+* [Kotlin Standard Library](https://central.sonatype.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8)
+* [Kotlinx Coroutines](https://central.sonatype.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm)
 
-To use this library, add the `Partigon.jar` file (found in [Releases](https://github.com/Gameoholic/Partigon/releases)) and `Kotlin.jar` (found [here](https://github.com/Gameoholic/PaperKotlin/releases)) to your plugins folder. Partigon requires the Kotlin stdlib to work. 
-
-Then, add Partigon as a [dependency or soft dependency](https://docs.papermc.io/paper/dev/plugin-yml#dependencies) like any other plugin:
-
-```yml
-depend: [ Partigon ]
-```
-
-To add Partigon as a Maven dependency:
-
-```xml
-<repository>
-  <id>gameoholic-repo</id>
-  <url>https://repo.gameoholic.xyz/releases</url>
-</repository>
-
-<dependency>
-  <groupId>xyz.gameoholic</groupId>
-  <artifactId>partigon</artifactId>
-  <version>version</version>
-  <scope>provided</scope>
-</dependency>
-```
-
-To add Partigon as a Gradle (Kotlin) dependency:
-
-```gradle
-repositories {
-    maven {
-        url = uri("https://repo.gameoholic.xyz/releases")
-    }
-}
-dependencies {
-    compileOnly("xyz.gameoholic:partigon:version")
-}
-```
+To include these in your classpath at runtime, you can either shade them into your plugin jar or implement a Paper
+[PluginLoader](https://docs.papermc.io/paper/dev/getting-started/paper-plugins#loaders) to download and cache the 
+libraries during server start-up.

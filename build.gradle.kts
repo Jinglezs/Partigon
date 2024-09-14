@@ -8,7 +8,7 @@ plugins {
 
 }
 
-group = "xyz.gameoholic"
+group = "net.lotushq"
 version = "1.4.0"
 description = "A Minecraft particle animation library written in Kotlin."
 
@@ -25,7 +25,6 @@ val shade: Configuration = project.configurations.create("shade") {
 
 dependencies {
     compileOnly(libs.kotlinx.coroutines)
-    compileOnly(libs.mccoroutine.api)
     compileOnly(libs.paper)
     shade(libs.exp4j)
     shade(libs.commons.math3)
