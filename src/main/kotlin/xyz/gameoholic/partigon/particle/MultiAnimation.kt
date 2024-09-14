@@ -1,10 +1,10 @@
 package xyz.gameoholic.partigon.particle
 
-import com.github.shynixn.mccoroutine.bukkit.ticks
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import xyz.gameoholic.partigon.util.ticksToDuration
 
 /**
  * Represents a [PartigonAnimation] composed of multiple [Animation]s that will be drawn in sync.
@@ -74,7 +74,7 @@ class MultiAnimation(animationList: List<Animation>) : PartigonAnimation {
                     if (it.isComplete) iterator.remove()
                 }
 
-                delay(1.ticks)
+                delay(1.ticksToDuration())
             }
         }
     }

@@ -1,7 +1,6 @@
 [versions]
 kotlin = "2.0.20"
 paper = "1.21-R0.1-SNAPSHOT"
-mccoroutine = "2.19.0"
 shadow = "8.3.1"
 exp4j = "0.4.8"
 commons-math3 = "3.6.1"
@@ -10,7 +9,6 @@ commons-math3 = "3.6.1"
 # Kotlin libraries
 #kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core-jvm", version = "1.9.0-RC.2" }
-mccoroutine-api = { group = "com.github.shynixn.mccoroutine", name = "mccoroutine-bukkit-api", version.ref = "mccoroutine" }
 
 # Paper API
 paper = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }

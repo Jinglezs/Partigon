@@ -22,7 +22,6 @@ val <T> Triple<*, *, T>.z
  */
 val Number.envelope: ConstantEnvelope
     get() = ConstantEnvelope(PropertyType.NONE, this)
-
 /**
  * Converts a Duration to minecraft ticks.
  */

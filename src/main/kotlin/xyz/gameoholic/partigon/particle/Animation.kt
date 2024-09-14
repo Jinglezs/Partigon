@@ -1,6 +1,5 @@
 package xyz.gameoholic.partigon.particle
 
-import com.github.shynixn.mccoroutine.bukkit.ticks
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -134,7 +133,7 @@ class Animation(
             job = scope.launch {
                 while (frameIndex <= maximumFrames) {
                     drawAnimationFrame()
-                    delay(1.ticks)
+                    delay(1.ticksToDuration())
                 }
             }
         }
