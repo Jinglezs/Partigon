@@ -6,10 +6,9 @@ package xyz.gameoholic.partigon.particle.loop
 class SingleIteration(override val duration: Int) : Loop {
 
     override val envelopeDuration: Int = duration
-    private val haltIndex = duration
 
     override fun applyLoop(frameIndex: Int): Int {
-        return frameIndex.coerceAtMost(haltIndex)
+        return frameIndex.coerceAtMost(envelopeDuration)
     }
 
 }
