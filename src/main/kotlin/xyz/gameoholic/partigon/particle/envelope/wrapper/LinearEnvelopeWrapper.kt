@@ -1,8 +1,8 @@
 package xyz.gameoholic.partigon.particle.envelope.wrapper
 
-import xyz.gameoholic.partigon.particle.envelope.Envelope
 import xyz.gameoholic.partigon.particle.envelope.EnvelopeGroup
 import xyz.gameoholic.partigon.particle.envelope.LinearEnvelope
+import xyz.gameoholic.partigon.particle.envelope.PropertyType
 import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.rotation.RotationOptions
@@ -30,9 +30,9 @@ object LinearEnvelopeWrapper {
     ): EnvelopeGroup = EnvelopeGroup(
         LinearEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_X
+                PropertyType.POS_X
             else
-                Envelope.PropertyType.OFFSET_X,
+                PropertyType.OFFSET_X,
             position1.x,
             position2.x,
             loop,
@@ -40,9 +40,9 @@ object LinearEnvelopeWrapper {
         ),
         LinearEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_Y
+                PropertyType.POS_Y
             else
-                Envelope.PropertyType.OFFSET_Y,
+                PropertyType.OFFSET_Y,
             position1.y,
             position2.y,
             loop,
@@ -50,9 +50,9 @@ object LinearEnvelopeWrapper {
         ),
         LinearEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_Z
+                PropertyType.POS_Z
             else
-                Envelope.PropertyType.OFFSET_Z,
+                PropertyType.OFFSET_Z,
             position1.z,
             position2.z,
             loop,

@@ -4,7 +4,6 @@ import xyz.gameoholic.partigon.particle.envelope.*
 import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.rotation.RotationOptions
-import xyz.gameoholic.partigon.util.rotation.RotationUtil
 import java.lang.IllegalArgumentException
 
 object CurveEnvelopeWrapper {
@@ -84,7 +83,7 @@ object CurveEnvelopeWrapper {
      * @return The trigonometric envelope to be used on this property to create the curve.
      */
     fun curveEnvelope(
-        propertyType: Envelope.PropertyType,
+        propertyType: PropertyType,
         value1: Envelope,
         value2: Envelope,
         curveOrientation: CurveOrientation,
@@ -95,33 +94,33 @@ object CurveEnvelopeWrapper {
         //todo: clean up this shitty code
         val trigFunc =
             if ((curveOrientation == CurveOrientation.LEFT || curveOrientation == CurveOrientation.LEFT_ABOVE || curveOrientation == CurveOrientation.LEFT_BELOW) && vectorComponent == VectorComponent.X)
-                TrigonometricEnvelope.TrigFunc.SIN
+                TrigFunc.SIN
             else if ((curveOrientation == CurveOrientation.LEFT || curveOrientation == CurveOrientation.LEFT_ABOVE || curveOrientation == CurveOrientation.LEFT_BELOW) && vectorComponent == VectorComponent.Z)
-                TrigonometricEnvelope.TrigFunc.COS
+                TrigFunc.COS
             else if ((curveOrientation == CurveOrientation.RIGHT || curveOrientation == CurveOrientation.RIGHT_ABOVE || curveOrientation == CurveOrientation.RIGHT_BELOW) && vectorComponent == VectorComponent.X)
-                TrigonometricEnvelope.TrigFunc.COS
+                TrigFunc.COS
             else if ((curveOrientation == CurveOrientation.RIGHT || curveOrientation == CurveOrientation.RIGHT_ABOVE || curveOrientation == CurveOrientation.RIGHT_BELOW) && vectorComponent == VectorComponent.Z)
-                TrigonometricEnvelope.TrigFunc.SIN
+                TrigFunc.SIN
             else if ((curveOrientation == CurveOrientation.RIGHT_BELOW || curveOrientation == CurveOrientation.LEFT_BELOW) && vectorComponent == VectorComponent.Y)
-                TrigonometricEnvelope.TrigFunc.SIN
+                TrigFunc.SIN
             else if ((curveOrientation == CurveOrientation.RIGHT_ABOVE || curveOrientation == CurveOrientation.LEFT_ABOVE) && vectorComponent == VectorComponent.Y)
-                TrigonometricEnvelope.TrigFunc.COS
+                TrigFunc.COS
             else if ((curveOrientation == CurveOrientation.ABOVE) && vectorComponent == VectorComponent.Y)
-                TrigonometricEnvelope.TrigFunc.SIN
+                TrigFunc.SIN
             else if ((curveOrientation == CurveOrientation.ABOVE) && vectorComponent == VectorComponent.X)
-                TrigonometricEnvelope.TrigFunc.COS
+                TrigFunc.COS
             else if ((curveOrientation == CurveOrientation.ABOVE) && vectorComponent == VectorComponent.Z)
-                TrigonometricEnvelope.TrigFunc.COS
+                TrigFunc.COS
             else if ((curveOrientation == CurveOrientation.BELOW) && vectorComponent == VectorComponent.Y)
-                TrigonometricEnvelope.TrigFunc.COS
+                TrigFunc.COS
             else if ((curveOrientation == CurveOrientation.BELOW) && vectorComponent == VectorComponent.X)
-                TrigonometricEnvelope.TrigFunc.SIN
+                TrigFunc.SIN
             else if ((curveOrientation == CurveOrientation.BELOW) && vectorComponent == VectorComponent.Z)
-                TrigonometricEnvelope.TrigFunc.SIN
+                TrigFunc.SIN
             else
                 throw IllegalArgumentException("Invalid combination of curve orientation & vector component")
 
-        return TrigonometricEnvelope(
+        return TrigonometricEnvelope.create(
             propertyType,
             value1,
             value2,
@@ -150,7 +149,7 @@ object CurveEnvelopeWrapper {
      * @throws IllegalArgumentException If the method doesn't support the property type provided.
      */
     fun curveEnvelope(
-        propertyType: Envelope.PropertyType,
+        propertyType: PropertyType,
         value1: Envelope,
         value2: Envelope,
         curveOrientation: CurveOrientation,
@@ -159,12 +158,12 @@ object CurveEnvelopeWrapper {
     ): TrigonometricEnvelope {
         val vectorComponent =
             when (propertyType) {
-                Envelope.PropertyType.POS_X -> VectorComponent.X
-                Envelope.PropertyType.POS_Y -> VectorComponent.Y
-                Envelope.PropertyType.POS_Z -> VectorComponent.Z
-                Envelope.PropertyType.OFFSET_X -> VectorComponent.X
-                Envelope.PropertyType.OFFSET_Y -> VectorComponent.Y
-                Envelope.PropertyType.OFFSET_Z -> VectorComponent.Z
+                PropertyType.POS_X -> VectorComponent.X
+                PropertyType.POS_Y -> VectorComponent.Y
+                PropertyType.POS_Z -> VectorComponent.Z
+                PropertyType.OFFSET_X -> VectorComponent.X
+                PropertyType.OFFSET_Y -> VectorComponent.Y
+                PropertyType.OFFSET_Z -> VectorComponent.Z
                 else -> throw IllegalArgumentException("This method doesn't support this property type, see method docs for more info.")
             }
 
@@ -205,9 +204,9 @@ object CurveEnvelopeWrapper {
     ): EnvelopeGroup = EnvelopeGroup(
         curveEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_X
+                PropertyType.POS_X
             else
-                Envelope.PropertyType.OFFSET_X,
+                PropertyType.OFFSET_X,
             position1.x,
             position2.x,
             curveOrientation,
@@ -216,9 +215,9 @@ object CurveEnvelopeWrapper {
         ),
         curveEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_Y
+                PropertyType.POS_Y
             else
-                Envelope.PropertyType.OFFSET_Y,
+                PropertyType.OFFSET_Y,
             position1.y,
             position2.y,
             curveOrientation,
@@ -227,9 +226,9 @@ object CurveEnvelopeWrapper {
         ),
         curveEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_Z
+                PropertyType.POS_Z
             else
-                Envelope.PropertyType.OFFSET_Z,
+                PropertyType.OFFSET_Z,
             position1.z,
             position2.z,
             curveOrientation,

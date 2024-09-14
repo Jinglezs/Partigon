@@ -1,14 +1,11 @@
 package xyz.gameoholic.partigon.particle.envelope
 
 import xyz.gameoholic.partigon.particle.loop.Loop
-import xyz.gameoholic.partigon.util.EnvelopeTriple
-
 
 /**
  * Represents an envelope for interpolating property values over time.
  */
 interface Envelope {
-    enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z, EXTRA, NONE }
 
     /**
      * The property type the envelope controls.
@@ -56,5 +53,6 @@ interface Envelope {
      */
     fun copyWithPropertyType(propertyType: PropertyType): Envelope
 
-
 }
+
+enum class PropertyType { POS_X, POS_Y, POS_Z, COUNT, OFFSET_X, OFFSET_Y, OFFSET_Z, EXTRA, NONE }

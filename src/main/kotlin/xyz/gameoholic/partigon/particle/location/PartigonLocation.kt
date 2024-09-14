@@ -11,4 +11,5 @@ interface PartigonLocation {
      * Gets the location for the particle.
      */
     fun getLocation(): Location
+
 }

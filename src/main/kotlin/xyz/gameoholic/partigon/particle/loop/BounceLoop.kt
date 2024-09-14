@@ -1,8 +1,7 @@
 package xyz.gameoholic.partigon.particle.loop
 
-import org.bstats.charts.AdvancedPie
-import xyz.gameoholic.partigon.PartigonPlugin
-import xyz.gameoholic.partigon.util.inject
+import xyz.gameoholic.partigon.util.ticks
+import kotlin.time.Duration
 
 /**
  * When loop reaches end, reverses the animation similarly to RepeatLoop,
@@ -18,15 +17,16 @@ import xyz.gameoholic.partigon.util.inject
  * @throws IllegalArgumentException If loop duration is not above 0.
  */
 class BounceLoop(override val duration: Int) : Loop {
-    private val plugin: PartigonPlugin by inject()
+
+    constructor(duration: Duration) : this(duration.ticks)
 
     override val envelopeDuration = duration / 2 + 1
 
     init {
         if (duration <= 0)
             throw IllegalArgumentException("Bounce loop duration must be above 0.")
-        plugin.metrics.addCustomChart(AdvancedPie("loopsCreated") { mapOf("Bounce" to 1) }) // bstats
     }
+
     override fun applyLoop(frameIndex: Int): Int {
         // For loop index 0,1,2,3 half loop index will be 0,1,2,0
         val loopIndex = frameIndex % duration

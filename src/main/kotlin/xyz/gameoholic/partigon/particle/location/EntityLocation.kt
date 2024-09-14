@@ -14,5 +14,4 @@ class EntityLocation(private val entity: Entity, private val offset: Vector = Ve
         this.y += offset.y
         this.z += offset.z
     }
-
 }

@@ -53,7 +53,7 @@ object CircleEnvelopeWrapper {
      * @return The trigonometric envelope to be used on this property to create the circle.
      */
     fun circleEnvelope(
-        propertyType: Envelope.PropertyType,
+        propertyType: PropertyType,
         value1: Envelope,
         value2: Envelope,
         circleDirection: CircleDirection,
@@ -63,17 +63,17 @@ object CircleEnvelopeWrapper {
     ): TrigonometricEnvelope {
         val trigFunc =
             if (circleDirection == CircleDirection.LEFT && vectorComponent == VectorComponent.X)
-                TrigonometricEnvelope.TrigFunc.SIN
+                TrigFunc.SIN
             else if (circleDirection == CircleDirection.LEFT && vectorComponent == VectorComponent.Z)
-                TrigonometricEnvelope.TrigFunc.COS
+                TrigFunc.COS
             else if (circleDirection == CircleDirection.RIGHT && vectorComponent == VectorComponent.X)
-                TrigonometricEnvelope.TrigFunc.COS
+                TrigFunc.COS
             else if (circleDirection == CircleDirection.RIGHT && vectorComponent == VectorComponent.Z)
-                TrigonometricEnvelope.TrigFunc.SIN
+                TrigFunc.SIN
             else
                 throw IllegalArgumentException("Invalid combination of circle direction & vector component")
 
-        return TrigonometricEnvelope(
+        return TrigonometricEnvelope.create(
             propertyType,
             value1,
             value2,
@@ -104,7 +104,7 @@ object CircleEnvelopeWrapper {
      * @return The trigonometric envelope to be used on this property to create the circle.
      */
     fun circleEnvelope(
-        propertyType: Envelope.PropertyType,
+        propertyType: PropertyType,
         value1: Envelope,
         value2: Envelope,
         circleDirection: CircleDirection,
@@ -113,10 +113,10 @@ object CircleEnvelopeWrapper {
     ): TrigonometricEnvelope {
         val vectorComponent =
             when (propertyType) {
-                Envelope.PropertyType.POS_X -> VectorComponent.X
-                Envelope.PropertyType.POS_Z -> VectorComponent.Z
-                Envelope.PropertyType.OFFSET_X -> VectorComponent.X
-                Envelope.PropertyType.OFFSET_Z -> VectorComponent.Z
+                PropertyType.POS_X -> VectorComponent.X
+                PropertyType.POS_Z -> VectorComponent.Z
+                PropertyType.OFFSET_X -> VectorComponent.X
+                PropertyType.OFFSET_Z -> VectorComponent.Z
                 else -> throw IllegalArgumentException("This method doesn't support this property type, see method docs for more info.")
             }
 
@@ -151,7 +151,7 @@ object CircleEnvelopeWrapper {
      * @return The trigonometric envelope to be used on this property to create the circle.
      */
     fun circleEnvelope(
-        propertyType: Envelope.PropertyType,
+        propertyType: PropertyType,
         center: EnvelopePair,
         radius: Envelope,
         loop: Loop,
@@ -159,10 +159,10 @@ object CircleEnvelopeWrapper {
     ): TrigonometricEnvelope {
         val vectorComponent =
             when (propertyType) {
-                Envelope.PropertyType.POS_X -> VectorComponent.X
-                Envelope.PropertyType.POS_Z -> VectorComponent.Z
-                Envelope.PropertyType.OFFSET_X -> VectorComponent.X
-                Envelope.PropertyType.OFFSET_Z -> VectorComponent.Z
+                PropertyType.POS_X -> VectorComponent.X
+                PropertyType.POS_Z -> VectorComponent.Z
+                PropertyType.OFFSET_X -> VectorComponent.X
+                PropertyType.OFFSET_Z -> VectorComponent.Z
                 else -> throw IllegalArgumentException("This method doesn't support this property type, see method docs for more info.")
             }
         return circleEnvelope(propertyType, vectorComponent, center, radius, loop, completion)
@@ -185,7 +185,7 @@ object CircleEnvelopeWrapper {
      * @return The trigonometric envelope to be used on this property to create the circle.
      */
     fun circleEnvelope(
-        propertyType: Envelope.PropertyType,
+        propertyType: PropertyType,
         vectorComponent: VectorComponent,
         center: EnvelopePair,
         radius: Envelope,
@@ -241,9 +241,9 @@ object CircleEnvelopeWrapper {
     ): EnvelopeGroup = EnvelopeGroup(
         circleEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_X
+                PropertyType.POS_X
             else
-                Envelope.PropertyType.OFFSET_X,
+                PropertyType.OFFSET_X,
             position1.first,
             position2.first,
             circleDirection,
@@ -252,15 +252,15 @@ object CircleEnvelopeWrapper {
         ),
         ConstantEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_Y
+                PropertyType.POS_Y
             else
-                Envelope.PropertyType.OFFSET_Y, 0.0
+                PropertyType.OFFSET_Y, 0.0
         ),
         circleEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_Z
+                PropertyType.POS_Z
             else
-                Envelope.PropertyType.OFFSET_Z,
+                PropertyType.OFFSET_Z,
             position1.second,
             position2.second,
             circleDirection,
@@ -293,9 +293,9 @@ object CircleEnvelopeWrapper {
     ): EnvelopeGroup = EnvelopeGroup(
         circleEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_X
+                PropertyType.POS_X
             else
-                Envelope.PropertyType.OFFSET_X,
+                PropertyType.OFFSET_X,
             center,
             radius,
             loop,
@@ -303,15 +303,15 @@ object CircleEnvelopeWrapper {
         ),
         ConstantEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_Y
+                PropertyType.POS_Y
             else
-                Envelope.PropertyType.OFFSET_Y, 0.0
+                PropertyType.OFFSET_Y, 0.0
         ),
         circleEnvelope(
             if (envelopeGroupType == EnvelopeGroup.EnvelopeGroupType.POSITION)
-                Envelope.PropertyType.POS_Z
+                PropertyType.POS_Z
             else
-                Envelope.PropertyType.OFFSET_Z,
+                PropertyType.OFFSET_Z,
             center,
             radius,
             loop,

@@ -1,10 +1,8 @@
 package xyz.gameoholic.partigon.util.rotation
 
-import xyz.gameoholic.partigon.util.*
-import xyz.gameoholic.partigon.util.Utils.envelope
 import org.apache.commons.math3.linear.MatrixUtils
 import org.apache.commons.math3.linear.RealMatrix
-import java.lang.RuntimeException
+import xyz.gameoholic.partigon.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -67,8 +65,6 @@ internal object RotationUtil {
         val newX = newPointMatrix.data[0][0]
         val newY = newPointMatrix.data[1][0]
         val newZ = newPointMatrix.data[2][0]
-
-        LoggerUtil.debug("Applied rotation for point (${point.x}, ${point.y}, ${point.z}) -> ($newX, $newY, $newZ).\nAngle was $angleRadians in radians.")
 
         return DoubleTriple(newX, newY, newZ)
     }

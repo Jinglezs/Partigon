@@ -1,14 +1,11 @@
 package xyz.gameoholic.partigon.particle.envelope
 
+import net.objecthunter.exp4j.ExpressionBuilder
 import xyz.gameoholic.partigon.particle.loop.Loop
 import xyz.gameoholic.partigon.util.*
 import xyz.gameoholic.partigon.util.rotation.RotationUtil
-import net.objecthunter.exp4j.ExpressionBuilder
-import org.bstats.charts.SingleLineChart
-import xyz.gameoholic.partigon.PartigonPlugin
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
-
 
 /**
  * Basic envelope that animates a property of a particle animation with an expression.
@@ -21,25 +18,21 @@ import java.lang.RuntimeException
  * @param nestedEnvelopes The nested envelopes.
  */
 open class BasicEnvelope(
-    override val propertyType: Envelope.PropertyType,
+    override val propertyType: PropertyType,
     override val envelopeExpression: String,
     override val loop: Loop,
     override val completion: Double,
     override val nestedEnvelopes: List<Envelope>
 ) : Envelope {
 
-    private val plugin: PartigonPlugin by inject()
-
     //todo: add doc here
     constructor(
         envelopeExpression: String,
         loop: Loop,
         completion: Double,
-        nestedEnvelopes: List<Envelope>) : this(Envelope.PropertyType.NONE, envelopeExpression, loop, completion, nestedEnvelopes)
+        nestedEnvelopes: List<Envelope>
+    ) : this(PropertyType.NONE, envelopeExpression, loop, completion, nestedEnvelopes)
 
-    init {
-        plugin.metrics.addCustomChart(SingleLineChart("basicEnvelopesCreated") { 1 }) // bstats
-    }
     override var envelopeGroup: EnvelopeGroup? = null
         set(value) {
             if (field != null)
@@ -72,19 +65,19 @@ open class BasicEnvelope(
 
                 var newPosition = RotationUtil.applyRotationsForPoint(
                     Triple(
-                        it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                        it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0,
-                        it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true) ?: 0.0
+                        it.envelopeX.getValueAt(loopedFrameIndex, rawValue = true),
+                        it.envelopeY.getValueAt(loopedFrameIndex, rawValue = true),
+                        it.envelopeZ.getValueAt(loopedFrameIndex, rawValue = true)
                     ), it.rotationOptions, frameIndex
                 )
 
                 return when (propertyType) {
-                    Envelope.PropertyType.POS_X -> newPosition.x
-                    Envelope.PropertyType.POS_Y -> newPosition.y
-                    Envelope.PropertyType.POS_Z -> newPosition.z
-                    Envelope.PropertyType.OFFSET_X -> newPosition.x
-                    Envelope.PropertyType.OFFSET_Y -> newPosition.y
-                    Envelope.PropertyType.OFFSET_Z -> newPosition.z
+                    PropertyType.POS_X -> newPosition.x
+                    PropertyType.POS_Y -> newPosition.y
+                    PropertyType.POS_Z -> newPosition.z
+                    PropertyType.OFFSET_X -> newPosition.x
+                    PropertyType.OFFSET_Y -> newPosition.y
+                    PropertyType.OFFSET_Z -> newPosition.z
                     else -> throw IllegalArgumentException("Non-position/offset envelope cannot be inside of an envelope group.")
                 }
             }
@@ -95,7 +88,7 @@ open class BasicEnvelope(
             .setVariable("frame_index", loopedFrameIndex.toDouble()).evaluate()
     }
 
-    override fun copyWithPropertyType(propertyType: Envelope.PropertyType): BasicEnvelope {
+    override fun copyWithPropertyType(propertyType: PropertyType): BasicEnvelope {
         return BasicEnvelope(propertyType, envelopeExpression, loop, completion, nestedEnvelopes)
     }
 

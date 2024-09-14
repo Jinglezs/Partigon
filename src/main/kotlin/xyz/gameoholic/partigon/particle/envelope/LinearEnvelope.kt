@@ -1,10 +1,6 @@
 package xyz.gameoholic.partigon.particle.envelope
 
-import org.bstats.charts.AdvancedPie
-import xyz.gameoholic.partigon.PartigonPlugin
 import xyz.gameoholic.partigon.particle.loop.Loop
-import xyz.gameoholic.partigon.util.LoggerUtil
-import xyz.gameoholic.partigon.util.inject
 
 
 /**
@@ -17,14 +13,12 @@ import xyz.gameoholic.partigon.util.inject
  * @param completion How much of the animation to animate. 1.0 for its entirety, 0.5 for half, etc.
  */
 class LinearEnvelope(
-    override val propertyType: Envelope.PropertyType,
+    override val propertyType: PropertyType,
     private val value1: Envelope,
     private val value2: Envelope,
     override val loop: Loop,
     override val completion: Double = 1.0): BasicEnvelope(propertyType, "", loop, completion, listOf())
 {
-    private val plugin: PartigonPlugin by inject()
-
     override val envelopeExpression: String
     override val nestedEnvelopes: List<Envelope>
 
@@ -42,7 +36,7 @@ class LinearEnvelope(
         value1: Envelope,
         value2: Envelope,
         loop: Loop,
-        completion: Double = 1.0) : this(Envelope.PropertyType.NONE, value1, value2, loop, completion)
+        completion: Double = 1.0) : this(PropertyType.NONE, value1, value2, loop, completion)
 
     init {
         val nestedEnvelopesList = mutableListOf<Envelope>()
@@ -59,12 +53,9 @@ class LinearEnvelope(
 
         envelopeExpression = "$value1String + frame_index * (($value2String - $value1String) / ${loop.envelopeDuration - 1}) * $completion"
         nestedEnvelopes = nestedEnvelopesList.toList()
-
-        plugin.metrics.addCustomChart(AdvancedPie("envelopesCreated") { mapOf("Linear" to 1) }) // bstats
-        LoggerUtil.debug("Created line envelope: $envelopeExpression with ${nestedEnvelopes.size} nested envelopes")
     }
 
-    override fun copyWithPropertyType(propertyType: Envelope.PropertyType): LinearEnvelope {
+    override fun copyWithPropertyType(propertyType: PropertyType): LinearEnvelope {
         return LinearEnvelope(propertyType, value1, value2, loop, completion)
     }
 

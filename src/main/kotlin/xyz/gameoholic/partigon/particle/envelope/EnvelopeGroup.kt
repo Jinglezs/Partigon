@@ -1,11 +1,6 @@
 package xyz.gameoholic.partigon.particle.envelope
 
-import org.bstats.charts.AdvancedPie
-import org.bstats.charts.SingleLineChart
-import xyz.gameoholic.partigon.PartigonPlugin
-import xyz.gameoholic.partigon.util.inject
 import xyz.gameoholic.partigon.util.rotation.RotationOptions
-import xyz.gameoholic.partigon.util.rotation.RotationUtil
 import java.lang.RuntimeException
 
 /**
@@ -23,24 +18,21 @@ class EnvelopeGroup(
     val envelopeX: Envelope, //todo: provide default values here, for offset AND position.
     val envelopeY: Envelope,
     val envelopeZ: Envelope,
-    var rotationOptions: List<RotationOptions> = listOf() // Needs to be var, so SingularParticle can add additional rotations on top
+    var rotationOptions: List<RotationOptions> = listOf() // Needs to be var, so Animation can add additional rotations on top
 ) {
-    private val plugin: PartigonPlugin by inject()
 
     enum class EnvelopeGroupType { POSITION, OFFSET }
 
     init {
         if (envelopeX.envelopeGroup != null || envelopeY.envelopeGroup != null || envelopeZ.envelopeGroup != null)
             throw RuntimeException("Envelopes may only have one envelope group assigned to them.")
-        if (envelopeX.propertyType != Envelope.PropertyType.POS_X && envelopeX.propertyType != Envelope.PropertyType.OFFSET_X &&
-            envelopeY.propertyType != Envelope.PropertyType.POS_Y && envelopeY.propertyType != Envelope.PropertyType.OFFSET_Y &&
-            envelopeZ.propertyType != Envelope.PropertyType.POS_Z && envelopeZ.propertyType != Envelope.PropertyType.OFFSET_Z)
+        if (envelopeX.propertyType != PropertyType.POS_X && envelopeX.propertyType != PropertyType.OFFSET_X &&
+            envelopeY.propertyType != PropertyType.POS_Y && envelopeY.propertyType != PropertyType.OFFSET_Y &&
+            envelopeZ.propertyType != PropertyType.POS_Z && envelopeZ.propertyType != PropertyType.OFFSET_Z)
             throw IllegalArgumentException("One of the envelopes' properties is invalid for group.")
         envelopeX.envelopeGroup = this
         envelopeY.envelopeGroup = this
         envelopeZ.envelopeGroup = this
-
-        plugin.metrics.addCustomChart(SingleLineChart("envelopeGroupsCreated") { 1 }) // bstats
     }
     /**
      * Returns a list of all envelopes.

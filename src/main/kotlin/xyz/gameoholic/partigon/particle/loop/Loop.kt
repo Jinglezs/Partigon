@@ -5,6 +5,7 @@ package xyz.gameoholic.partigon.particle.loop
  * Used for looping envelopes and controlling their durations.
  */
 interface Loop {
+
     /**
      * The amount of frames the loop will last.
      */
